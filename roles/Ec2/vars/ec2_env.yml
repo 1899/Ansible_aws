@@ -1,0 +1,8 @@
+---
+
+instance_type: "t2.micro"
+image: "ami-b63769a1"
+ec2_tag_Name: "MyTest"
+ec2_tag_Type: "App"
+ec2_tag_Environment: "ENV"
+count: 1

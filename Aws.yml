@@ -1,0 +1,19 @@
+---
+
+# Setting Up EC2
+
+- name: Setting up Ec2  Infrastucture
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+    - Ec2
+
+# Setting up RDS
+
+- name: Setting up RDS  Infrastucture
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+    - Rds

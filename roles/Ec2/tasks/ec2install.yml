@@ -1,0 +1,88 @@
+---
+
+- name: Creating security group
+  ec2_group:
+    name: "{{ security_group }}"
+    description: "security group for {{ app_name }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_subnet_id }}"
+    rules:
+        - proto: tcp
+          from_port: 22
+          to_port: 22
+          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          from_port: 8080
+          to_port: 8080
+          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          from_port: 80
+          to_port: 80
+          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          from_port: 443
+          to_port: 443
+          cidr_ip: 0.0.0.0/0
+    rules_egress:
+        - proto: all
+          cidr_ip: 0.0.0.0/0
+  register: ec2_security
+
+- debug: var=ec2_security
+
+- name: Creating an EC2 Key
+  ec2_key:
+    name: "{{ ec2_key_pair }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{ region }}"
+    state: present
+  register: ec2_key
+
+- debug: var=ec2_key
+
+- name: Saving private key
+  copy: 
+    content: "{{ ec2_key.key.private_key }}"
+    dest: "~/.ssh/{{ ec2_key_pair }}.pem" 
+    mode: 0600 
+    remote_src: True
+  when: ec2_key.changed
+
+- name: Launching Ec2 Instance
+  ec2:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    key_name: "{{ ec2_key_pair }}"
+    group: "{{ security_group }}"
+    instance_type: "{{ instance_type }}"
+    image: "{{ image }}"
+    wait: true
+    region: "{{ region }}"
+    vpc_subnet_id: "{{ pu_subnet3 }}"
+    instance_tags: '{"Name":"{{ ec2_tag_Name }}","Type":"{{ ec2_tag_Type }}","Environment":"{{ ec2_tag_Environment }}"}'
+    count: "{{ count }}"
+  register: ec2
+
+- debug: var=ec2
+  with_items: "{{ ec2.instances }}"
+
+- name: Adding instance to inventory file
+  local_action: lineinfile
+                dest=inventory 
+                regexp={{ item.public_ip }}
+                insertafter='\[aws\]' line={{ item.public_ip }}
+  with_items: "{{ ec2.instances }}"
+
+- meta: refresh_inventory
+  
+- name: Wait for SSH to come up
+  wait_for:
+    host: "{{ item.public_ip }}"
+    port: 22
+    delay: 60
+    timeout: 320 
+    state: started      
+  with_items: "{{ ec2.instances }}"

@@ -1,0 +1,14 @@
+---
+
+- name: Create RDS subnet group for ODOO
+  rds_subnet_group:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{ region }}"
+    state: present
+    name: "{{ rds_name }}"
+    description: RDS Subnet for Aurora
+    subnets:
+      - "{{ pu_subnet1 }}"
+      - "{{ pu_subnet2 }}"
+  register: rds_subnet

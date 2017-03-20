@@ -1,0 +1,46 @@
+---
+
+# AWS Credentials
+
+aws_access_key: "REDACTED"
+aws_secret_key: "REDACTED"
+vpc_subnet_id: "REDACTED"
+region: "REDACTED"
+
+pu_subnet1: "REDACTED"
+pu_subnet2: "REDACTED"
+pu_subnet3: "REDACTED"
+pu_subnet4: "REDACTED"
+pu_zone_elb1: "REDACTED"
+pu_zone_elb2: "REDACTED"
+
+# Keypair Parameters
+
+ec2_key_pair: "REDACTED"
+
+# Security Group/s
+
+security_group: "REDACTED"
+
+
+
+# Application Parameters
+app_name: "REDACTED"
+
+# RDS Parameters
+
+zone: "REDACTED"
+rds_name: "REDACTED"
+rds_sg_name: "REDACTED"
+db_name: "REDACTED"
+rds_security_group: "REDACTED"
+rds_size: "REDACTED"
+iops: "1000"
+rds_type: "db.t2.micro"
+license_type: "REDACTED"
+rds_username: "REDACTED"
+rds_password: "REDACTED"
+rds_application: "App"
+rds_environment: "ENV"
+eng_version: "REDACTED"
+rds_port: "REDACTED"

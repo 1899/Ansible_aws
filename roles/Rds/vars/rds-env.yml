@@ -1,0 +1,15 @@
+---
+
+zone: "us-east-1c"
+rds_name: "odoo"
+db_name: "compucomuat"
+ec2_subnet_id: "vpc-7fb20418"
+rds_security_group: "sg-b7215ecc"
+rds_size: "100"
+iops: "1000"
+rds_type: "db.t2.large"
+license_type: "postgresql-license"
+rds_username: "root"
+rds_password: "root1234#"
+rds_application: "ODOO_UAT_RDS"
+rds_environment: "UAT"

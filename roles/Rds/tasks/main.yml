@@ -1,0 +1,7 @@
+---
+
+- include_vars: ../../../key.yml
+- include: rds_subnet.yml
+- include: rds_sgroup.yml
+- include_vars: ./roles/Rds/vars/sg.yml
+- include: rdsinstall.yml

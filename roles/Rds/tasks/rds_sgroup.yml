@@ -1,0 +1,26 @@
+---
+
+- name: Creating security group
+  ec2_group:
+    name: "{{ rds_sg_name }}"
+    description: "security group for {{ app_name }} rds instance"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_subnet_id }}"
+    rules:
+      - proto: tcp
+        from_port: 5432
+        to_port: 5432
+        cidr_ip: 0.0.0.0/0
+    rules_egress:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
+  register: rds_security
+
+- debug: var=rds_security
+
+- name: Fetch security group id
+  copy:
+    content: "rds_sg{{':'}}{{' \"'}}{{ rds_security.group_id }}{{'\"'}}"
+    dest: "./roles/Rds/vars/sg.yml"
