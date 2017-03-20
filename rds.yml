@@ -1,0 +1,9 @@
+# Setting up RDS
+
+- name: Setting up RDS  Infrastucture
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+    - Rds
+
