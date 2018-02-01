@@ -6,6 +6,10 @@
   gather_facts: no
   roles:
     - VPC
-#    - Ec2
-#    - Rds
 
+- name: Setting up Ec2  Infrastucture
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+    - Ec2

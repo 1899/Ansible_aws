@@ -71,3 +71,18 @@
   register: vpc_nat
 
 - debug: var=vpc_nat
+
+
+- name: Fetch VPC ID
+  copy:
+    content: "vpc_subnet_id{{':'}}{{' \"'}}{{ vpc.vpc.id }}{{'\"'}}"
+    dest: "./vpckey.yml"
+
+- name: Fetch subnet Info
+  copy:
+    content: "pu_snet1{{':}}{{' \"'}}{{ pusub1.subnet.id }}{{'\"}}"
+    local_action: lineinfile
+                  dest=../../../../vpckey.yml
+                  regexp={{ pusub1.subnet.id }}
+                  insertafter='vpc_subnet_id' line={{ pusub1.subnet.id }}
+                  

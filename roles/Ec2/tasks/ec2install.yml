@@ -1,5 +1,11 @@
 ---
 
+- name: Checking whether instance is already available in specific region
+  command: python tag.py "{{ region }}" "{{ ec2_tag_Name }}" "{{ aws_access_key }}" "{{ aws_secret_key }}"
+  register: instanceExist
+
+- debug: var=instanceExist
+
 - name: Creating security group
   ec2_group:
     name: "{{ security_group }}"

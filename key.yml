@@ -43,4 +43,5 @@ prtag2:
   consumer: "{{ email }}"
 
 # Ec2 Details
-ec2_key_pair: "ansibledemo"
+ec2_key_pair: "ansible"
+security_group: "test"

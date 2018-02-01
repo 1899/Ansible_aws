@@ -1,7 +1,8 @@
 ---
 
-- include_vars: ../../../key.yml
 
+- include_vars: ../../../key.yml
+- include_vars: ../../vpckey.yml
 - include_vars: ec2_env.yml
 
 - include: ec2install.yml

@@ -1,4 +1,4 @@
-# Setting Up EC2
+---
 
 - name: Setting up Ec2  Infrastucture
   hosts: localhost
@@ -6,4 +6,3 @@
   gather_facts: no
   roles:
     - Ec2
-
