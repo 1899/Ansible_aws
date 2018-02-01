@@ -1,0 +1,73 @@
+---
+
+- name: Create Virtual Private Cloud
+  ec2_vpc_net:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    name: "{{ site_name }}"
+    state: present
+    cidr_block: "{{ cidr_ip }}"
+    resource_tags: "{{ resource_tags }}"
+    region: us-east-1
+    dns_support: True
+    dns_hostnames: True
+  register: vpc
+
+- debug: var=vpc
+
+- name: Create Internet gateway
+  ec2_vpc_igw:
+    vpc_id: "{{ vpc.vpc.id }}"
+    state: present
+    region: "{{ region }}"
+  register: igw
+
+- name: First Public Subnet
+  ec2_vpc_subnet:
+    state: present
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ pusub1 }}"
+    az: us-east-1a
+    tags: "{{ putag1 }}"
+    map_public: True
+  register: pusub1
+- name: Second Public Subnet
+  ec2_vpc_subnet:
+    state: present
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ pusub2 }}"
+    az: us-east-1b
+    tags: "{{ putag2 }}"
+    map_public: True
+  register: pusub2
+- name: First Private subnet creation
+  ec2_vpc_subnet:
+    state: present
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ prsub1 }}"
+    az: us-east-1c
+    tags: "{{ prtag1 }}"
+  register: prsub1
+- name: Second Private subnet creation
+  ec2_vpc_subnet:
+    state: present
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ prsub2 }}"
+    az: us-east-1d
+    tags: "{{ prtag2 }}"
+    region: "{{ region }}"
+  register: prsub2
+
+- debug: var=prsub1
+- debug: var=prsub2
+
+- name: Create new nat gateway and allocate new EIP.
+  ec2_vpc_nat_gateway:
+    if_exist_do_not_create: True
+    state: present
+    subnet_id: "{{ prsub2.subnet.id }}"
+    wait: yes
+    region: "{{ region }}"
+  register: vpc_nat
+
+- debug: var=vpc_nat

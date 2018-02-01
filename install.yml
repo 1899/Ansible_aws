@@ -1,0 +1,11 @@
+# Setting up Infrastructure on AWS
+
+- name: Creating virtual private cloud(VPC)
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+    - VPC
+#    - Ec2
+#    - Rds
+

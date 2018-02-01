@@ -4,43 +4,43 @@
 
 aws_access_key: "REDACTED"
 aws_secret_key: "REDACTED"
-vpc_subnet_id: "REDACTED"
-region: "REDACTED"
+region: "us-east-1"
 
-pu_subnet1: "REDACTED"
-pu_subnet2: "REDACTED"
-pu_subnet3: "REDACTED"
-pu_subnet4: "REDACTED"
-pu_zone_elb1: "REDACTED"
-pu_zone_elb2: "REDACTED"
+# VPC 
 
-# Keypair Parameters
+cidr_ip: "10.20.0.0/16"
+site_name: "YM"
+app_name: "Test"
+env: "POC"
+cstc: "India"
+email: "me@yesudasmallipeddi.online"
 
-ec2_key_pair: "REDACTED"
-
-# Security Group/s
-
-security_group: "REDACTED"
+pusub1: "10.20.4.0/24"
+pusub2: "10.20.6.0/24"
+prsub1: "10.20.5.0/24"
+prsub2: "10.20.7.0/24"
 
 
+putag1:
+  Name: "Public subnet 1"
+  Environment: "{{ env }}"
+  Costcenter: "{{ cstc }}"
+  consumer: "{{ email }}"
+putag2:
+  Name: "Public subnet 2"
+  Environment: "{{ env }}"
+  Costcenter: "{{ cstc }}"
+  consumer: "{{ email }}"
+prtag1:
+  Name: "Private Subnet 1"
+  Environment: "{{ env }}"
+  Costcenter: "{{ cstc }}"
+  consumer: "{{ email }}"
+prtag2:
+  Name: "Private Subnet 2"
+  Environment: "{{ env }}"
+  Costcenter: "{{ cstc }}"
+  consumer: "{{ email }}"
 
-# Application Parameters
-app_name: "REDACTED"
-
-# RDS Parameters
-
-zone: "REDACTED"
-rds_name: "REDACTED"
-rds_sg_name: "REDACTED"
-db_name: "REDACTED"
-rds_security_group: "REDACTED"
-rds_size: "REDACTED"
-iops: "1000"
-rds_type: "db.t2.micro"
-license_type: "REDACTED"
-rds_username: "REDACTED"
-rds_password: "REDACTED"
-rds_application: "App"
-rds_environment: "ENV"
-eng_version: "REDACTED"
-rds_port: "REDACTED"
+# Ec2 Details
+ec2_key_pair: "ansibledemo"

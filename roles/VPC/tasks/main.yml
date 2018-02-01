@@ -1,0 +1,4 @@
+---
+- include_vars: ../../../key.yml
+- include_vars: env.yml
+- import_tasks: vpc.yml
